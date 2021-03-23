@@ -1,8 +1,5 @@
-import Assign2_Problem1 as p1
 from random import gauss, seed
 import numpy as np
-from math import exp
-from scipy.optimize import optimize
 
 #define the constant
 NOM=100000
@@ -49,9 +46,7 @@ def monte_carlo_simulation3(I,CP):
                     break
 
                 #two conditions: early termination and on the expiry day
-
                 if 30 < t < 60 and S_T >= Pc:
-
                     early_ter_recieve=NOM+NOM*CP*(t-30)/30
                     early_ter_payoff = early_ter_recieve/pow((1+r),t/30*0.0833)-NOM
                     total_payoff=first_coupon+early_ter_payoff
@@ -66,7 +61,6 @@ def monte_carlo_simulation3(I,CP):
                     break;
 
                 #on the expiry day
-
                 if t==N-1 and not flag_knock:
                     total_payoff=NOM/pow((1+r),0.25)-NOM
                     payoff.append(total_payoff)
@@ -80,24 +74,23 @@ def monte_carlo_simulation3(I,CP):
     return np.mean(payoff)
 
 if __name__ == "__main__":
-
     I_item = [1000, 10000, 100000, 500000]
     test_i = 100
     all_fair_price = []
 
     for i in I_item:
+        #calculate the question 1
         fair_price = monte_carlo_simulation3(i, CP_set1)
         all_fair_price.append(fair_price)
         print('the fair value of simulate', i, 'times is :', fair_price)
         print('the profit of bank in each case in', i, 'times simalation', 'is', -fair_price + S)
 
         # calculate the question2
-
         fair_price2 = monte_carlo_simulation3( i, CP_set2)
         print('the fair value of simulate', i, 'times in cp set 2 is :', fair_price2)
         print("the additional profit is :", -fair_price2 + fair_price)
 
-        calculate the question3
+    #calculate the question3
 
     CP_item=np.arange(0.005,0.01,.0001)
     profit=[]
@@ -115,7 +108,8 @@ if __name__ == "__main__":
     print('the cp =',np.argmin(profit)/10000+0.005)
     print('the gap is :',np.min(profit))
 
-    # fair_price3 = monte_carlo_simulation3(1000, 0.0093)
+    #test module
+    # fair_price3 = monte_carlo_simulation3(1000, test_cp)
     # profit_margin = -fair_price3 / NOM
     # print(profit_margin)
 
